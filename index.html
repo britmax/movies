@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BritMax Streaming</title>
+    <style>
+        body { background: radial-gradient(circle, #050510, #000); color: #fff; font-family: sans-serif; margin: 0; min-height: 100vh; }
+        header { padding: 30px; text-align: center; border-bottom: 3px solid #6a0dad; background: #000; }
+        h1 { margin: 0; font-size: 3rem; background: linear-gradient(45deg, #FFD700, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 4px; }
+        #catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; padding: 40px; }
+        .movie-card { position: relative; background: #0a0a1a; border-radius: 8px; border: 2px solid #1a1a40; overflow: hidden; cursor: pointer; transition: 0.4s; }
+        .movie-card:hover { transform: scale(1.05); border-color: #FF007F; box-shadow: 0 0 20px #6a0dad; }
+        .movie-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
+        .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, #12002b, transparent); padding: 15px; opacity: 0; transition: 0.3s; }
+        .movie-card:hover .card-overlay { opacity: 1; }
+        .card-overlay h3 { margin: 0; color: #FFD700; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <header><h1>BritMax</h1></header>
+    <main id="catalog"></main>
+    <script>
+        // PASTE YOUR GOOGLE APPS SCRIPT URL BELOW
+        const API_URL = "PASTE_YOUR_URL_HERE";
+
+        async function load() {
+            try {
+                const res = await fetch(API_URL);
+                const movies = await res.json();
+                const container = document.getElementById('catalog');
+                movies.forEach(m => {
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.innerHTML = `<img src="${m.Poster_URL}"><div class="card-overlay"><h3>${m.Title}</h3><p>${m.Genre}</p></div>`;
+                    card.onclick = () => window.open(`https://rumble.com/embed/${m.Rumble_Embed_ID}/`, "_blank");
+                    container.appendChild(card);
+                });
+            } catch (e) { console.error("Load failed", e); }
+        }
+        load();
+    </script>
+</body>
+</html>
