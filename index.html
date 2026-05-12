@@ -1,140 +1,39 @@
 <!DOCTYPE html>
-<html lang="en code:
-`const response = await fetch(API_URL);`
-
-To this:
-`const response = await fetch(API_URL, { redirect: '">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BritMax Streaming</title>
     <style>
-        body { background: radial-gradient(circle, #0505follow' });`
-
-### 2. The "Anonymous" Access Gap
-If you can open the `API_URL` in your browser and see the10, #000); color: #fff; font-family: sans-serif; margin: 0; min-height: 100vh; }
-        header { padding: 40px; text-align: center; border-bottom: 3px solid #6a0dad; background: #0 data, but the website shows the error, it means the website is being treated as an "unauthorized" visitor.
-*   Go to **Deploy > Manage Deploy00; }
-        h1 { margin: 0; font-size: 3.5rem; background: linear-gradient(45deg, #FFments** in Apps Script.
-*   Verify it says **"Who has access: Anyone"**. 
-*   **Crucial:** "Anyone" isD700, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 8px; }
-        #catalog { display: grid; grid-template-columns: repeat(auto-fill, min different from "Anyone with a Google Account." If it requires a login, the website will fail to load the data.
-
-### 3. Invisible Formatting (max(260px, 1fr)); gap: 40px; padding: 60px; max-width: 1400px; margin: 0 auto; }
-        .movie-card { position: relative; background: #0a0a1a; border-radius: 12pxCopy/Paste Junk)
-Sometimes when copying code from a chat window, "Non-breaking spaces" (invisible characters) get pasted into the code.
-; border: 2px solid #1a1a40; overflow: hidden; cursor: pointer; transition: 0.4s; }
-        .movie-card:hover { transform: translateY(-10px); border-color: #FF007F; box-shadow: 0 0 25*   Look at your `API_URL` line. Ensure there are no weird spaces inside the quotes or at the very end of the line.
-*   Ensure the URLpx rgba(138, 43, 226, 0.8); }
+        body { background: radial-gradient(circle, #050510, #000); color: #fff; font-family: sans-serif; margin: 0; min-height: 100vh; }
+        header { padding: 40px; text-align: center; border-bottom: 3px solid #6a0dad; background: #000; box-shadow: 0 4px 30px rgba(106, 13, 173, 0.5); }
+        h1 { margin: 0; font-size: 3.5rem; background: linear-gradient(45deg, #FFD700, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 8px; }
+        #catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 40px; padding: 60px; max-width: 1400px; margin: 0 auto; }
+        .movie-card { position: relative; background: #0a0a1a; border-radius: 12px; border: 2px solid #1a1a40; overflow: hidden; cursor: pointer; transition: 0.4s; }
+        .movie-card:hover { transform: translateY(-10px); border-color: #FF007F; box-shadow: 0 0 25px rgba(138, 43, 226, 0.8); }
         .movie-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
-        .info { padding: 15px; background: starts with `https://` and ends with `/exec`.
-
----
-
-**One Quick Test:**
-If you open your live website, press **F12** ( #000; }
-        .info h3 { margin: 0; color: #FFD700; font-size: 1.2rem;or right-click -> Inspect) and click the **Console** tab. 
-*   If you see **"Access-Control-Allow-Origin" }
+        .info { padding: 15px; background: #000; }
+        .info h3 { margin: 0; color: #FFD700; font-size: 1.2rem; }
         .info p { margin: 5px 0 0; color: #00d4ff; font-size: 0.85rem; }
-        .status-badge { position: absolute; top: 10px; right: 10px; background: rgba(255, ** — It's a Google Permission setting.
-*   If you see **"404"** — The URL you pasted is incorrect.
-*   0, 127, 0.8); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; }
+        .status-badge { position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 127, 0.8); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; }
     </style>
 </head>
 <body>
     <header><h1>BritMax</h1></header>
-    <main id="catalogIf you see **"SyntaxError: Unexpected token <"** — Your Apps Script is sending a Google Login page instead of the movie data.
-
-**Does the Console show a specific red error message?**"></main>
+    <main id="catalog"></main>
     <script>
+        // REPLACE THIS URL WITH YOUR GOOGLE EXEC URL
         const API_URL = "https://script.google.com/macros/s/AKfycbz-c3zccgU2NRkc1oZynLylQpLrYWV0VRCp3wFkkh32KIgEZ80cgHARTuTLtYingOFhag/exec";
+
         async function loadMovies() {
             const container = document.getElementById('catalog');
             try {
-                const response = await fetch(API_URL);
+                // The 'redirect: follow' helps handle Google's security jumps
+                const response = await fetch(API_URL, { redirect: 'follow' });
                 if (!response.ok) throw new Error('Network response was not ok');
                 const movies = await response.json();
-                container.innerHTML = ""; // Clear loader
-                movies.forEach(movie => {
-                    if (movie.Title) {
-                        const card = document.createElement('div');
-                        card.className = 'movie-card';
-                        card.innerHTML = `
-                            <div class="status-badge">${movie.Genre || ''}</div>
-                            <img src="${movie.Poster_URL}" alt="${movie.Title}">
-                            <div class="info">
-                                <h3>${movie.Title}</h3>
-                                <p>${movie.Rating} • ${movie.Description}</p>
-                            </div>`;
-                        card.onclick = () => window.open(movie.Rumble_Embed_ID, "_blank");
-                        container.appendChild(card);
-                    }
-                });
-            } catch (error) {
-                console.error("Error:", error);
-                container.innerHTML = "<p style='text-align:center;'>Unable to load movies. Verify the Apps Script is deployed as 'Anyone'.</p>";
-            }
-        }
-        loadMovies();
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en code:
-`const response = await fetch(API_URL);`
-
-To this:
-`const response = await fetch(API_URL, { redirect: '">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BritMax Streaming</title>
-    <style>
-        body { background: radial-gradient(circle, #0505follow' });`
-
-### 2. The "Anonymous" Access Gap
-If you can open the `API_URL` in your browser and see the10, #000); color: #fff; font-family: sans-serif; margin: 0; min-height: 100vh; }
-        header { padding: 40px; text-align: center; border-bottom: 3px solid #6a0dad; background: #0 data, but the website shows the error, it means the website is being treated as an "unauthorized" visitor.
-*   Go to **Deploy > Manage Deploy00; }
-        h1 { margin: 0; font-size: 3.5rem; background: linear-gradient(45deg, #FFments** in Apps Script.
-*   Verify it says **"Who has access: Anyone"**. 
-*   **Crucial:** "Anyone" isD700, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 8px; }
-        #catalog { display: grid; grid-template-columns: repeat(auto-fill, min different from "Anyone with a Google Account." If it requires a login, the website will fail to load the data.
-
-### 3. Invisible Formatting (max(260px, 1fr)); gap: 40px; padding: 60px; max-width: 1400px; margin: 0 auto; }
-        .movie-card { position: relative; background: #0a0a1a; border-radius: 12pxCopy/Paste Junk)
-Sometimes when copying code from a chat window, "Non-breaking spaces" (invisible characters) get pasted into the code.
-; border: 2px solid #1a1a40; overflow: hidden; cursor: pointer; transition: 0.4s; }
-        .movie-card:hover { transform: translateY(-10px); border-color: #FF007F; box-shadow: 0 0 25*   Look at your `API_URL` line. Ensure there are no weird spaces inside the quotes or at the very end of the line.
-*   Ensure the URLpx rgba(138, 43, 226, 0.8); }
-        .movie-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
-        .info { padding: 15px; background: starts with `https://` and ends with `/exec`.
-
----
-
-**One Quick Test:**
-If you open your live website, press **F12** ( #000; }
-        .info h3 { margin: 0; color: #FFD700; font-size: 1.2rem;or right-click -> Inspect) and click the **Console** tab. 
-*   If you see **"Access-Control-Allow-Origin" }
-        .info p { margin: 5px 0 0; color: #00d4ff; font-size: 0.85rem; }
-        .status-badge { position: absolute; top: 10px; right: 10px; background: rgba(255, ** — It's a Google Permission setting.
-*   If you see **"404"** — The URL you pasted is incorrect.
-*   0, 127, 0.8); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; }
-    </style>
-</head>
-<body>
-    <header><h1>BritMax</h1></header>
-    <main id="catalogIf you see **"SyntaxError: Unexpected token <"** — Your Apps Script is sending a Google Login page instead of the movie data.
-
-**Does the Console show a specific red error message?**"></main>
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbz-c3zccgU2NRkc1oZynLylQpLrYWV0VRCp3wFkkh32KIgEZ80cgHARTuTLtYingOFhag/exec";
-        async function loadMovies() {
-            const container = document.getElementById('catalog');
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Network response was not ok');
-                const movies = await response.json();
-                container.innerHTML = ""; // Clear loader
+                
+                container.innerHTML = ""; 
                 movies.forEach(movie => {
                     if (movie.Title) {
                         const card = document.createElement('div');
